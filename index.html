@@ -1,0 +1,164 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <title>SR Light, from Bryderi</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <!-- Le styles -->
+    <link href="bootstrap/css/bootstrap.css" rel="stylesheet">
+    <style type="text/css">
+      body {
+        padding-top: 60px;
+        padding-bottom: 40px;
+      }
+    </style>
+    <link href="bootstrap/css/bootstrap-responsive.css" rel="stylesheet">
+
+    <!-- HTML5 shim, for IE6-8 support of HTML5 elements -->
+    <!--[if lt IE 9]>
+      <script src="bootstrap/js/html5shiv.js"></script>
+    <![endif]-->
+
+    <!-- Fav and touch icons -->
+    <link rel="apple-touch-icon-precomposed" sizes="144x144" href="bootstrap/ico/apple-touch-icon-144-precomposed.png">
+    <link rel="apple-touch-icon-precomposed" sizes="114x114" href="bootstrap/ico/apple-touch-icon-114-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" sizes="72x72" href="bootstrap/ico/apple-touch-icon-72-precomposed.png">
+	<link rel="apple-touch-icon-precomposed" href="bootstrap/ico/apple-touch-icon-57-precomposed.png">
+	<link rel="shortcut icon" href="bootstrap/ico/favicon.png">
+  </head>
+
+  <body>
+
+    <div class="navbar navbar-inverse navbar-fixed-top">
+      <div class="navbar-inner">
+        <div class="container">
+         
+
+          <a class="brand" href="#">SR Light</a>
+        
+        </div>
+      </div>
+    </div>
+
+    <div class="container">
+
+      <!-- Main hero unit for a primary marketing message or call to action -->
+     <div class="row">
+		<div id="Categories" class="span4">
+			 <h2>Categories</h2>
+		  <ul  data-bind="foreach: categories">
+          	<li><a href="#programs" data-bind="click: $parent.changeCategory"><span data-bind="text: name"> </span></a></li>
+          </ul>
+		</div>
+		<div id="programs" class="span4">	        
+			<h2>Program</h2>
+			<ul data-bind="foreach: programs">
+				<li><a href="#episodes" data-bind="click: $parent.changeProgram"><span data-bind="text: name"></span></a></li>
+			</ul>
+		</div>
+
+        <div id="episodes" class="span4">
+          <h2>Episodes</h2>
+          <ul data-bind="foreach: episodes">
+			<li><a href="#chosenEpisode" data-bind="click: $parent.changeEpisode"><span data-bind="text: title"></span></a></li>
+			</ul>
+        </div>
+      </div>
+		<hr/>
+	  <div id="chosenEpisode" class="row" data-bind="with: chosenEpisode">
+	  	<h2 data-bind="text: episode.title"></h2></a>
+		<span data-bind="text: episode.description"></span></p>
+		<ul class="unstyled">
+			<li data-bind="if: episode.listenpodfile">
+				<audio controls>
+					<source data-bind="attr: {src: episode.listenpodfile.url}"> </source>
+				</audio>
+			</li>
+			<li data-bind="if: episode.downloadpodfile"><a data-bind="attr: {href: episode.downloadpodfile.url}">Ladda ner till senare</a></li>
+		</ul>
+	  </div>
+      <hr>
+
+      <footer>
+        <p>&copy; Bryderi 2013</p>
+      </footer>
+
+    </div> <!-- /container -->
+
+    <!-- Le javascript
+    ================================================== -->
+    <!-- Placed at the end of the document so the pages load faster -->
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+	<script src="http://ajax.aspnetcdn.com/ajax/knockout/knockout-2.2.1.js"></script>
+    <script src="bootstrap/js/bootstrap.js"></script>
+	
+	<script>
+	
+		
+		// Define view model
+		function viewModel() {
+	    	var self = this;
+			self.categories = ko.observableArray();
+			self.programs = ko.observableArray();
+			self.episodes = ko.observableArray();
+			self.chosenEpisode = ko.observable();
+			
+			
+			self.changeCategory = function() {
+				self.programs.removeAll();
+				$.getJSON('http://sverigesradio.se/api/v2/programs?format=json&callback=?&programcategoryid='+this.id, function(data) {
+					$.each(data.programs, function(key, val) {
+						model.programs.push( val );
+					});
+						$('html, body').animate({
+					         scrollTop: $("#programs").offset().top
+					     }, 1000);
+				});
+			
+				
+			}
+			
+			self.changeProgram = function() {
+				self.episodes.removeAll();
+				$.getJSON('http://api.sr.se/api/v2/episodes/index?format=json&callback=?&programid=' + this.id, function(data) {
+					$.each(data.episodes, function(key, val) {
+						model.episodes.push( val );	
+							$('html, body').animate({
+						         scrollTop: $("#episodes").offset().top
+						     }, 1000);
+					});
+				
+				
+				});
+			}
+			
+			self.changeEpisode = function() {
+				$.getJSON('http://api.sr.se/api/v2/episodes/'+this.id+'?format=json&callback=?&programid=', function(data) {
+					self.chosenEpisode(data);
+					$('html, body').animate({
+				         scrollTop: $("#chosenEpisode").offset().top
+				     }, 1000);
+				});
+				
+			}
+		}
+			
+		var model = new viewModel();
+		ko.applyBindings(model);
+		
+	
+		
+		// Setup view model
+		$.getJSON('http://api.sr.se/api/v2/programcategories/?format=json&callback=?', function(data) {
+				$.each(data.programcategories, function(key, val) {			
+					model.categories.push( val );
+				});
+			});
+		
+	
+	</script>
+  </body>
+</html>
