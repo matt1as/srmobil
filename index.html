@@ -2,7 +2,7 @@
 <html lang="en">
   <head>
     <meta charset="utf-8">
-    <title>SR Light, from Bryderi</title>
+    <title>SR Mobil, from Bryderi</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <meta name="description" content="">
     <meta name="author" content="">
@@ -35,7 +35,7 @@
 	<div class="navbar navbar-inverse navbar-fixed-top">
 	      <div class="navbar-inner">
 			<div class="container">
-				<a class="brand" href="#">SR Light</a>
+				<a class="brand" href="#">SR Mobil</a>
 			</div>
 	      </div>
 	</div>
@@ -337,6 +337,14 @@
 			model.setEpisode(this.params['episode']);
 		}
         });
+
+		DISQUS.reset({
+		  reload: true,
+		  config: function () {  
+		    this.page.identifier = this.params['episode'];  
+		    this.page.url = window.location.href;
+		  }
+		});
 
       }).run();
 
