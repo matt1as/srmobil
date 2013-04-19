@@ -113,7 +113,7 @@
 				<script type="text/javascript">
 				    /* * * CONFIGURATION VARIABLES: EDIT BEFORE PASTING INTO YOUR WEBPAGE * * */
 				    var disqus_shortname = 'srmobil'; // required: replace example with your forum shortname
-
+				     var disqus_identifier = 'main';
 				    /* * * DON'T EDIT BELOW THIS LINE * * */
 				    (function() {
 					var dsq = document.createElement('script'); dsq.type = 'text/javascript'; dsq.async = true;
@@ -337,6 +337,8 @@
 		    model.selectedEpisode().episode.id != this.params['episode'] ) {
 			model.setEpisode(this.params['episode']);
 		}
+
+		alert(this.params['episode']);
 			DISQUS.reset({
 			  reload: true,
 			  config: function () {  
