@@ -211,13 +211,7 @@
 			self.setEpisodeCallback = function( data ) {
 				self.selectedEpisode( data );
 				self.scrollTo("episode");
-						DISQUS.reset({
-						  reload: true,
-						  config: function () {  
-						    this.page.identifier = data.id;  
-						    this.page.url = window.location.href;
-						  }
-						});
+					
 			}
 
 			self.previousEpisodes = function() {
@@ -343,7 +337,13 @@
 		    model.selectedEpisode().episode.id != this.params['episode'] ) {
 			model.setEpisode(this.params['episode']);
 		}
-
+			DISQUS.reset({
+			  reload: true,
+			  config: function () {  
+			    this.page.identifier = data.id;  
+			    this.page.url = window.location.href;
+			  }
+			});
 	
         });
 	
