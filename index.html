@@ -169,7 +169,7 @@
 			self.setCategoryCallback = function( data ) {
 				self.selectedCategory( data );
 				getPrograms(data.programcategory.id, self.setProgramsCallback );	
-				sammyApplication.clearTemplateCache()();
+				sammyApplication.clearTemplateCache();
 			}
 			
 			// Set Categories
@@ -187,7 +187,7 @@
 			self.setProgramCallback = function( data ) {
 				self.selectedProgram(data);
 				getEpisodes( data.program.id, self.setEpisodesCallback );
-				sammyApplication.clearTemplateCache()();
+				sammyApplication.clearTemplateCache();
 			}
 
 			// Set Current Program
@@ -195,7 +195,7 @@
 				self.programs( data );
 				self.nextpagePrograms( data.pagination.nextpage );
 				self.scrollTo("programs");
-				sammyApplication.clearTemplateCache()();
+				sammyApplication.clearTemplateCache();
 			}
 
 			// Set Episodes
@@ -203,7 +203,7 @@
 				self.episodes( data );
 				self.nextpageEpisodes( data.pagination.nextpage );
 				self.scrollTo("episodes");
-				sammyApplication.clearTemplateCache()();
+				sammyApplication.clearTemplateCache();
 			}
 
 			// Set Current Episodes
@@ -216,7 +216,7 @@
 			self.setEpisodeCallback = function( data ) {
 				self.selectedEpisode( data );
 				self.scrollTo("episode");
-				sammyApplication.clearTemplateCache()();
+				sammyApplication.clearTemplateCache();
 			}
 
 			self.previousEpisodes = function() {
@@ -224,7 +224,7 @@
 				$.getJSON(url, function(data) {
 					self.episodes(data);	
 				});
-				sammyApplication.clearTemplateCache()();
+				sammyApplication.clearTemplateCache();
 			}
 
 			self.moreEpisodes = function() {
@@ -240,7 +240,7 @@
 
 					});
 				}
-				sammyApplication.clearTemplateCache()();
+				sammyApplication.clearTemplateCache();
 			}
 
 			self.morePrograms = function() {
@@ -255,7 +255,7 @@
 						self.nextpagePrograms(data.pagination.nextpage);
 					});
 				}
-				sammyApplication.clearTemplateCache()();
+				sammyApplication.clearTemplateCache();
 			}
 
 			self.scrollTo = function( anchor ) {
