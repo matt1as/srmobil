@@ -46,14 +46,14 @@
 			<div id="categories" class="span4">
 				<h2>Kategorier</h2>
 				<ul  data-bind="foreach: categories">
-					<li><a data-bind="attr: {href: '#/category/'+id}" ><span data-bind="text: name"> </span></a></li>
+					<li><a data-bind="attr: {href: '#!/category/'+id}" ><span data-bind="text: name"> </span></a></li>
 				</ul>
 			</div>
 			<div id="programs" class="span4" data-bind="if:programs" >	        
 				<span data-bind="with: selectedCategory"><h2 data-bind="text: programcategory.name, with:programs"></h2></span>
 				<div data-bind="with: programs">
 					<ul data-bind="foreach: programs">
-						<li><a data-bind="attr: {href: '#/category/'+$root.selectedCategory().programcategory.id+'/program/'+id }" ><span data-bind="text: name"></span></a></li>
+						<li><a data-bind="attr: {href: '#!/category/'+$root.selectedCategory().programcategory.id+'/program/'+id }" ><span data-bind="text: name"></span></a></li>
 					</ul>
 					<ul class="pager" data-bind="if: $root.nextpagePrograms" >  
 						<li ><a data-bind="click: $root.morePrograms">Mer</a></li>
@@ -65,7 +65,7 @@
 				<span data-bind="with: selectedProgram"><h2 data-bind="text: program.name"></h2></span>
 				<div data-bind="with:episodes">		
 					<ul data-bind="foreach: episodes">
-						<li><a data-bind="attr: {href: '#/category/'+$root.selectedCategory().programcategory.id+'/program/'+program.id+'/episode/'+id}"><span data-bind="text: title"></span></a></li>
+						<li><a data-bind="attr: {href: '#!/category/'+$root.selectedCategory().programcategory.id+'/program/'+program.id+'/episode/'+id}"><span data-bind="text: title"></span></a></li>
 					</ul>
 					<ul class="pager" data-bind="if: $root.nextpageEpisodes">
 					  
@@ -308,11 +308,11 @@
 	Sammy('#main', function() {
         
         // define a 'get' route that will be triggered at '#/path'
-        this.get('#/category/:category', function() {
+        this.get('#!/category/:category', function() {
 		model.setCategory(this.params['category']);
         });
 
-	this.get('#/category/:category/program/:program', function() {
+	this.get('#!/category/:category/program/:program', function() {
 		if( model.selectedCategory() == undefined|| 
 		    model.selectedCategory().programcategory.id != this.params['category'] ) {
 			model.setCategory(this.params['category']);
@@ -323,7 +323,7 @@
 		}
         });
 
-	this.get('#/category/:category/program/:program/episode/:episode', function() {
+	this.get('#!/category/:category/program/:program/episode/:episode', function() {
 		if( model.selectedCategory()==undefined|| 
 		    model.selectedCategory().programcategory.id != this.params['category'] ) {
 			model.setCategory(this.params['category']);
@@ -336,15 +336,16 @@
 		    model.selectedEpisode().episode.id != this.params['episode'] ) {
 			model.setEpisode(this.params['episode']);
 		}
-        });
 
-		DISQUS.reset({
-		  reload: true,
-		  config: function () {  
-		    this.page.identifier = this.params['episode'];  
-		    this.page.url = window.location.href;
-		  }
-		});
+			DISQUS.reset({
+			  reload: true,
+			  config: function () {  
+			    this.page.identifier = this.params['episode'];  
+			    this.page.url = window.location.href;
+			  }
+			});
+        });
+	
 
       }).run();
 
