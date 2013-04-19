@@ -168,7 +168,8 @@
 
 			self.setCategoryCallback = function( data ) {
 				self.selectedCategory( data );
-				getPrograms(data.programcategory.id, self.setProgramsCallback );
+				getPrograms(data.programcategory.id, self.setProgramsCallback );	
+				sammyApplication.refresh();
 			}
 			
 			// Set Categories
@@ -186,6 +187,7 @@
 			self.setProgramCallback = function( data ) {
 				self.selectedProgram(data);
 				getEpisodes( data.program.id, self.setEpisodesCallback );
+				sammyApplication.refresh();
 			}
 
 			// Set Current Program
@@ -193,6 +195,7 @@
 				self.programs( data );
 				self.nextpagePrograms( data.pagination.nextpage );
 				self.scrollTo("programs");
+				sammyApplication.refresh();
 			}
 
 			// Set Episodes
@@ -200,6 +203,7 @@
 				self.episodes( data );
 				self.nextpageEpisodes( data.pagination.nextpage );
 				self.scrollTo("episodes");
+				sammyApplication.refresh();
 			}
 
 			// Set Current Episodes
@@ -212,7 +216,7 @@
 			self.setEpisodeCallback = function( data ) {
 				self.selectedEpisode( data );
 				self.scrollTo("episode");
-					
+				sammyApplication.refresh();
 			}
 
 			self.previousEpisodes = function() {
@@ -220,6 +224,7 @@
 				$.getJSON(url, function(data) {
 					self.episodes(data);	
 				});
+				sammyApplication.refresh();
 			}
 
 			self.moreEpisodes = function() {
@@ -235,6 +240,7 @@
 
 					});
 				}
+				sammyApplication.refresh();
 			}
 
 			self.morePrograms = function() {
@@ -249,6 +255,7 @@
 						self.nextpagePrograms(data.pagination.nextpage);
 					});
 				}
+				sammyApplication.refresh();
 			}
 
 			self.scrollTo = function( anchor ) {
@@ -307,7 +314,7 @@
 		
 
 // define a new Sammy.Application bound to the #main element selector
-	Sammy('#main', function() {
+	var sammyApplication = Sammy('#main', function() {
         
         // define a 'get' route that will be triggered at '#/path'
         this.get('#!/category/:category', function() {
@@ -338,11 +345,12 @@
 		    model.selectedEpisode().episode.id != this.params['episode'] ) {
 			model.setEpisode(this.params['episode']);
 		}
-
+	      alert(window.location.href);
 		
 			DISQUS.reset({
 			  reload: true,
 			  config: function () {  
+			    
 			    this.page.identifier = this.params['episode'];  
 			    this.page.url = window.location.href;
 			  }
