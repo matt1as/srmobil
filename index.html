@@ -1,4 +1,4 @@
-x<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
   <head>
     <meta charset="utf-8">
@@ -161,7 +161,7 @@ x<!DOCTYPE html>
   
 			// Update Category
 			self.setCategory = function( id ) {
-				setLoader($('#categories'));
+				setLoader($('#programs'));
 				getCategory(id, self.setCategoryCallback );
 				
 			}
@@ -170,6 +170,7 @@ x<!DOCTYPE html>
 				self.selectedCategory( data );
 				getPrograms(data.programcategory.id, self.setProgramsCallback );	
 				sammyApplication.clearTemplateCache();
+				unsetLoader($('#programs'));
 			}
 			
 			// Set Categories
@@ -179,6 +180,7 @@ x<!DOCTYPE html>
 
 			// Set Program
 			self.setProgram = function( id ) {
+				setLoader($('#episodes'));
 				getProgram( id, self.setProgramCallback);
 				
 				
@@ -196,6 +198,7 @@ x<!DOCTYPE html>
 				self.nextpagePrograms( data.pagination.nextpage );
 				self.scrollTo("programs");
 				sammyApplication.clearTemplateCache();
+				unsetLoader($('#episodes'));
 			}
 
 			// Set Episodes
@@ -204,11 +207,12 @@ x<!DOCTYPE html>
 				self.nextpageEpisodes( data.pagination.nextpage );
 				self.scrollTo("episodes");
 				sammyApplication.clearTemplateCache();
+				unsetLoader($('#episodes'));
 			}
 
 			// Set Current Episodes
 			self.setEpisode = function( id ) {
-				
+				setLoader($('#episode'));
 				getEpisode( id, self.setEpisodeCallback );
 			}
 
@@ -217,6 +221,7 @@ x<!DOCTYPE html>
 				self.selectedEpisode( data );
 				self.scrollTo("episode");
 				sammyApplication.clearTemplateCache();
+				unsetLoader($('#episode'));
 			}
 
 			self.previousEpisodes = function() {
@@ -309,11 +314,11 @@ x<!DOCTYPE html>
 		}
 		
 		function setLoader( element ) {
-			element.css('background-image','/images/ajax-loader.gif');
+			element.css('background',' url(images/ajax-loader.gif) no-repeat center center' );
 		}
 
 		function unsetLoader( element ) {
-			element.css('background-image','');
+			element.css('background-image','none');
 		}
 
 		
