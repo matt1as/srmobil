@@ -161,6 +161,7 @@ x<!DOCTYPE html>
   
 			// Update Category
 			self.setCategory = function( id ) {
+				setLoader($('#categories'));
 				getCategory(id, self.setCategoryCallback );
 				
 			}
@@ -305,6 +306,14 @@ x<!DOCTYPE html>
 			$.getJSON('http://api.sr.se/api/v2/programcategories/?format=json&callback=?', function(data) {			
 				model.categories( data.programcategories );
 			});
+		}
+		
+		function setLoader( element ) {
+			element.css('background-image','/images/ajax-loader.gif');
+		}
+
+		function unsetLoader( element ) {
+			element.css('background-image','');
 		}
 
 		
