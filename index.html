@@ -168,6 +168,7 @@
 
 			self.setCategoryCallback = function( data ) {
 				self.selectedCategory( data );
+				document.title="SR Mobil - " + data.programcategory.name;
 				getPrograms(data.programcategory.id, self.setProgramsCallback );	
 				sammyApplication.clearTemplateCache();
 				unsetLoader($('#programs'));
@@ -188,6 +189,7 @@
 			
 			self.setProgramCallback = function( data ) {
 				self.selectedProgram(data);
+				document.title="SR Mobil - " + data.program.name;
 				getEpisodes( data.program.id, self.setEpisodesCallback );
 				sammyApplication.clearTemplateCache();
 			}
@@ -222,6 +224,7 @@
 				self.scrollTo("episode");
 				sammyApplication.clearTemplateCache();
 				unsetLoader($('#episode'));
+				document.title="SR Mobil - " + data.episode.title;
 			}
 
 			self.previousEpisodes = function() {
