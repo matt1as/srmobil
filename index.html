@@ -344,14 +344,13 @@ x<!DOCTYPE html>
 		    model.selectedEpisode().episode.id != this.params['episode'] ) {
 			model.setEpisode(this.params['episode']);
 		}
-	      	alert(window.location.href);
-			alert(this.params['episode']);
+	      
 			DISQUS.reset({
 			  reload: true,
 			
 			  config: function () {  
 			    
-			    this.page.identifier = this.params['episode'];  
+			    this.page.identifier = window.location.href;
 			    this.page.url = window.location.href;
 			  }
 			});
